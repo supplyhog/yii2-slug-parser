@@ -1,0 +1,19 @@
+{
+    "name": "supplyhog/yii2-slug-parser",
+    "authors": [
+        {
+            "name": "Wil Wade",
+            "email": "wil@supplyhog.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php" : ">=5.4.0",
+        "yiisoft/yii2" : "*"
+    },
+    "autoload": {
+        "psr-4": {
+             "supplyhog\\SlugParser\\" : "src"
+        }
+    }
+}
