@@ -44,7 +44,7 @@ class SecondSlugUrlRule extends SlugUrlRule
 			return false;
 		}
 
-		$parts = $this->group->getParts($request);
+		$parts = self::getParts($request);
 
 		//If there are no parts, we cannot continue!
 		if(!$parts){

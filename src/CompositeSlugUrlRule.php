@@ -58,7 +58,7 @@ class CompositeSlugUrlRule extends CompositeUrlRule
 	 */
 	public function parseRequest($manager, $request)
 	{
-		$parts = $this->getParts($request, false);
+		$parts = SlugRuleBase::getParts($request, false);
 		if (count($parts) === 0) {
 			return false;
 		}
@@ -124,22 +124,5 @@ class CompositeSlugUrlRule extends CompositeUrlRule
 	public function getSlugString()
 	{
 		return $this->_slugString;
-	}
-
-	/**
-	 * @param \yii\web\Request $request
-	 * @param bool $shift
-	 * @return array
-	 */
-	public function getParts($request, $shift = true)
-	{
-		$pathInfo = $request->getPathInfo();
-		$parts = array_values(array_filter(explode('/', trim($pathInfo))));
-		if(!$shift){
-			return $parts;
-		}
-		//Shift off the slug
-		array_shift($parts);
-		return $parts;
 	}
 }

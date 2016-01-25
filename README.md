@@ -10,8 +10,9 @@ supplyhog/yii2-slug-parser” : “dev-master”
 ##What Does It Do?
 
 Lets you have slugs that are defined via an interface (allowing for a universal slug table) so that url.com/post-title-slug
-will correctly parse into say /post/view?id=23. In addition with the ```SecondSlugInterface``` you can also have a second slug
-say /john-doe/post-title-slug parse into /post/view?id=23 while /sarah-jane/post-title-slug parses into /post/view?id=47.
+will correctly parse into say /post/view?id=23. With the ```SecondSlugInterface``` you can also have a second slug
+say /john-doe/post-title-slug parse into /post/view?id=23 while /sarah-jane/post-title-slug parses into /post/view?id=47. 
+If you use ```SimpleSlugUrlRule``` it will handle slugs that are on a table.
 
 In addition the slugs can have action and params appended in the friendly url as shown in the examples.
 
@@ -51,6 +52,7 @@ Why does it not handle url creation as well? So that the slugs can be permalinks
 //add url rules in config/main.php for the appropriate application
 $config[‘urlManager’]['rules'][] = [
   'class' => 'supplyhog\SlugParser\CompositeSlugUrlRule',
+  //'minLength' => 8 //Set the minimum require length of the slug default 8 
   'rules' => [
     //Example Rule for a top level slug
     // http://site.com/post-title-slug
@@ -81,6 +83,19 @@ $config[‘urlManager’]['rules'][] = [
     ],
   ]
 ];
+
+//SimpleSlugUrlRule For when the slug is not in a separate table
+$config[‘urlManager’]['rules'][] = [
+  'class' => 'supplyhog\SlugParser\SimpleSlugUrlRule',
+  //'minLength' => 8 //Set the minimum require length of the slug default 8
+  'modelClass' => 'common\models\Post', //The class that has the slug field
+  'controller' => 'frontend\controllers\PostController', //The controller the slug is pointing at
+  'route' => 'post', //The non-slug route
+  //'defaultAction' = 'view', //The default action if nothing else is used.
+  'modelField' => 'slug', //The permalink/slug field on the model that can be found using ::find()->andWhere([modelField => slugValue])
+  'modelKey' => 'id', //The field on the model that will be added to the params. Usually an id/primary key  
+];
+
 ```
 
 ###SlugInterface
