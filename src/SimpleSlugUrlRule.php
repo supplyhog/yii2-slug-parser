@@ -59,9 +59,7 @@ class SimpleSlugUrlRule extends SlugRuleBase implements \yii\web\UrlRuleInterfac
 			return false;
 		}
 
-		$modelClass = $this->modelClass;
-		$model = $modelClass::find()->andWhere([$this->modelField => $slugString])->one();
-
+		$model = $this->findModel($slugString);
 		if(!$model) {
 			return false;
 		}
@@ -78,5 +76,16 @@ class SimpleSlugUrlRule extends SlugRuleBase implements \yii\web\UrlRuleInterfac
 			return false;
 		}
 		return ['/' . $this->route . '/' . $action, $params];
+	}
+
+	/**
+	 * Take the slug and find the ActiveRecord model from it
+	 * @param $slugString
+	 * @return \yii\db\ActiveRecord | null
+	 */
+	protected function findModel($slugString)
+	{
+		$modelClass = $this->modelClass;
+		return $modelClass::find()->andWhere([$this->modelField => $slugString])->one();
 	}
 }
