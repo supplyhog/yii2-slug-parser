@@ -53,6 +53,7 @@ Why does it not handle url creation as well? So that the slugs can be permalinks
 $config[‘urlManager’]['rules'][] = [
   'class' => 'supplyhog\SlugParser\CompositeSlugUrlRule',
   //'minLength' => 8 //Set the minimum require length of the slug default 8 
+  'slugClass' => 'common\models\Slug', //The class that impliments the SlugInterface
   'rules' => [
     //Example Rule for a top level slug
     // http://site.com/post-title-slug
